@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.homemarket.system.dao.AdminMapper">
+	<resultMap type="Admin" id="findUser">
+		<id column="z_id" property="uId" />
+		<result column="z_username" property="uUsername" />
+		<result column="z_password" property="uPassword" />
+		<result column="z_realname" property="uRealname" />
+		<result column="z_state" property="uState" />
+		<result column="z_address" property="uAddress" />
+		<association property="role"
+			javaType="com.homemarket.system.entity.Role">
+			<id column="r_id" property="rid" />
+			<result column="r_rolename" property="rname" />
+		</association>
+	</resultMap>
+	<select id="findUserByName" parameterType="java.lang.String"
+		resultMap="findUser">
+		SELECT*from z_admin u,z_role r where u.z_r_id = r.r_id and
+		u.z_username=#{userName}
+	</select>
+	<select id="queryUserByName" parameterType="java.lang.String"
+		resultType="int">
+		SELECT COUNT(*) from z_admin where z_username=#{userName}
+	</select>
+
+</mapper>
